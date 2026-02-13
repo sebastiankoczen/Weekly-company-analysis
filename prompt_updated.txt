@@ -56,11 +56,10 @@ CRITICAL FORMATTING RULES:
 1. Use EXACTLY the delimiters "---COMPANY START---" and "---COMPANY END---"
 2. Use EXACTLY the situation names as shown (e.g., "SITUATION 1: Resource Constraints")
 3. Always provide exactly 3 key points per situation
-4. Provide 1-2 REAL, WORKING source URLs per situation in format: URL1 | URL2
-   - URLs MUST be actual, accessible web pages (company websites, news articles, reports)
-   - Do NOT use placeholder URLs like "example.com" or generic domains
-   - Prefer: company investor relations pages, Reuters, Bloomberg, Financial Times, industry publications
-   - If you cannot find a real URL, use the company's main website
+4. CRITICAL SOURCES RULE: You must use Perplexity's native citation numbers (e.g., [1], [2]).
+   - Place the citation numbers ONLY on the 'Sources:' line. Do not put them inside the 'Key Points' text.
+   - FORMAT: Sources: [1] | [2]
+   - Do NOT write out URLs yourself. Only use the bracketed numbers.
 5. Keep key points concise (max 150 characters each)
 6. If no evidence found for a situation, score as 1 and note "No significant evidence found"
 
