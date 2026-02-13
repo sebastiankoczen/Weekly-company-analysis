@@ -1,6 +1,6 @@
 Role: You are a senior strategy consultant specialized in Supply Chain & Procurement market intelligence.
 
-Objective: Analyze the provided list of companies to determine the extent to which they are currently suffering from one of the 4 defined situations. You must conduct web research (earnings calls, supply chain media, annual reports) to assign a score from 1 to 5 for EACH situation.
+Objective: Analyze the provided company to determine the extent to which they are currently suffering from one of the 4 defined situations. You must conduct web research (earnings calls, supply chain media, annual reports) to assign a score from 1 to 5 for EACH situation.
 
 You will find definitions of Situations and scoring in the definitions provided.
 
@@ -8,10 +8,11 @@ Constraints:
 - Focus on evidence from the last 18 months, specifically looking for FY2025 status and FY2026 outlook.
 - Exclude companies where the issue is clearly resolved.
 - Provide specific, concrete evidence for each score assigned.
+- SUBSIDIARY RULE: If a company is a subsidiary or private (e.g. Royal Canin), search for their parent company (Mars Inc). NEVER use general industry trend articles.
 
 Output Format: 
 
-For EACH company, analyze ALL 4 situations and provide results in the following EXACT format:
+Analyze ALL 4 situations and provide results in the following EXACT format:
 
 ---COMPANY START---
 Company: [Company Name]
@@ -51,49 +52,8 @@ Sources: [1] | [2]
 
 CRITICAL FORMATTING RULES:
 1. Use EXACTLY the delimiters "---COMPANY START---" and "---COMPANY END---"
-2. Use EXACTLY the situation names as shown (e.g., "SITUATION 1: Resource Constraints")
-3. Always provide exactly 3 key points per situation
-4. CRITICAL SOURCES RULE: You must use your native citation numbers (e.g., [1], [5], [12]).
-   - NEVER blindly copy "[1] | [2]" from the example below. You must write the actual citation numbers that correspond to the sources you used for that specific company and situation.
-
-Example:
-
-(Note: In this example, [1], [2], [3] are placeholders. You MUST use your own actual citation numbers from your web search!)
-
----COMPANY START---
-Company: Nestlé
-
-SITUATION 1: Resource Constraints
-Score: 2
-Key Points:
-- Glassdoor rating stable at 3.8/5 indicating generally positive sentiment
-- Minor unionization efforts at two European facilities, resolved through negotiation
-- Voluntary turnover below industry average at 12% annually
-Sources: [1] | [2]
-
-SITUATION 2: Supply Chain Disruption
-Score: 3
-Key Points:
-- Cocoa price volatility causing procurement challenges in Q1 2025
-- Implemented dual-sourcing strategy for 80% of critical ingredients
-- Extended lead times for packaging materials by 2-3 weeks
-Sources: [3] | [4]
-
-SITUATION 3: Margin Pressure
-Score: 3
-Key Points:
-- EBITDA margin compressed 1.2% YoY to 17.8% due to input cost inflation
-- Successfully passed 3.5% price increases to consumers in developed markets
-- Efficiency program targeting $500M in savings by end of 2026
-Sources: [5] | [6]
-
-SITUATION 4: Significant Growth
-Score: 3
-Key Points:
-- Organic growth of 6.2% in FY2024, driven by premium product expansion
-- Acquired two plant-based brands for $1.2B in Southeast Asia
-- Opening 4 new manufacturing facilities in India and Mexico by 2026
-Sources: [7] | [8]
----COMPANY END---
-
-Now analyze the provided companies following this exact format.
+2. Always provide exactly 3 key points per situation
+3. CRITICAL SOURCES RULE: You must use Perplexity's native citation numbers (e.g., [1], [2]).
+   - Place the citation numbers ONLY on the 'Sources:' line. Do not put them inside the 'Key Points' text.
+   - FORMAT: Sources: [1] | [2]
+   - Do NOT write out URLs yourself. Only use the bracketed numbers.
