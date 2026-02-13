@@ -8,7 +8,7 @@ Constraints:
 - Focus on evidence from the last 18 months, specifically looking for FY2025 status and FY2026 outlook.
 - Exclude companies where the issue is clearly resolved.
 - Provide specific, concrete evidence for each score assigned.
-- SUBSIDIARY RULE: If a company is a subsidiary or private (e.g. Royal Canin), search for their parent company (Mars Inc). NEVER use general industry trend articles.
+- SUBSIDIARY RULE: You must research the EXACT company provided. If the company is a subsidiary or privately held, determine its actual parent company and search for that specific parent's earnings. Do not substitute random companies. NEVER use general industry trend articles.
 
 Output Format: 
 
