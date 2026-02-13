@@ -29,17 +29,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests pandas openpyxl
       
-      # Step 4: Run the analysis script
+     # Step 4: Run the analysis script
       - name: Run weekly analysis
         env:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
-          # Optional: Email settings (uncomment to enable)
-          # SEND_EMAIL: "true"
-          # EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
-          # EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          # EMAIL_TO: ${{ secrets.EMAIL_TO }}
-          # SMTP_SERVER: "smtp.gmail.com"
-          # SMTP_PORT: "587"
+          SEND_EMAIL: "true"
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
         run: |
           python weekly_ai_report_enhanced.py
       
