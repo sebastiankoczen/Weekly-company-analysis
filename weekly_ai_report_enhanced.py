@@ -26,7 +26,7 @@ EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 # Perplexity API settings
 API_URL = "https://api.perplexity.ai/chat/completions"
-PERPLEXITY_MODEL = "llama-3.1-sonar-large-128k-online"
+PERPLEXITY_MODEL = "sonar"
 
 # Week settings
 COMPANIES_PER_WEEK = 10
