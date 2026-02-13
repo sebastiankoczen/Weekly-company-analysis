@@ -1,0 +1,56 @@
+name: Weekly Company Analysis - Enhanced
+
+on:
+  # Run every Monday at 9:00 AM UTC
+  schedule:
+    - cron: '0 9 * * 1'  # Format: minute hour day month weekday (1 = Monday)
+  
+  # Also allow manual trigger from GitHub UI
+  workflow_dispatch:
+
+jobs:
+  analyze-companies:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      # Step 3: Install required Python packages
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas openpyxl
+      
+      # Step 4: Run the analysis script
+      - name: Run weekly analysis
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          # Optional: Email settings (uncomment to enable)
+          # SEND_EMAIL: "true"
+          # EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          # EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          # EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          # SMTP_SERVER: "smtp.gmail.com"
+          # SMTP_PORT: "587"
+        run: |
+          python weekly_ai_report_enhanced.py
+      
+      # Step 5: Upload the reports as artifacts
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()  # Upload even if the script fails
+        with:
+          name: weekly-report-${{ github.run_number }}
+          path: |
+            report_*.txt
+            analysis_*.xlsx
+            email_preview_*.html
+          retention-days: 90  # Keep reports for 90 days
