@@ -23,7 +23,7 @@ EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 API_URL = "https://api.perplexity.ai/chat/completions"
 PERPLEXITY_MODEL = "sonar-pro"
-COMPANIES_PER_WEEK = 10
+COMPANIES_PER_WEEK = 5
 
 # ============================================================================
 # DATA STRUCTURES
@@ -675,28 +675,22 @@ def main():
             print(f"   {i}. {company}")
         print()
         
-# Get analysis iteratively (One company at a time for maximum quality)
-        print(f"\n🔍 Requesting deep analysis from Perplexity AI (One-by-One)...")
-        raw_result = ""
-
-        for i, company_name in enumerate(companies_this_week, 1):
-            print(f"  [{i}/{len(companies_this_week)}] Researching {company_name}...")
-
-            # Compose a laser-focused prompt for just ONE company
-            single_prompt = (
-                f"{role_objective}\n\n"
-                f"Definitions of Situations and Scoring:\n{scoring_defs}\n\n"
-                f"Company to Analyze:\n- {company_name}\n"
-            )
-
-            try:
-                # Force the AI to dedicate 100% of its processing power to this single company
-                company_response = get_perplexity_response(single_prompt)
-                raw_result += company_response + "\n\n"
-            except Exception as e:
-                print(f"  ⚠️ Error researching {company_name}: {str(e)}")
-                # If one company fails, don't crash the whole script! Move to the next one.
-                continue
+# Compose prompt
+        prompt = (
+            f"{role_objective}\n\n"
+            f"Definitions of Situations and Scoring:\n{scoring_defs}\n\n"
+            f"Companies to Analyze (Week {week_num}):\n{companies_text}\n"
+        )
+        
+        # Get analysis
+        print("🔍 Requesting analysis from Perplexity AI...")
+        print("(This may take 2-3 minutes for 5 companies)")
+        raw_result = get_perplexity_response(prompt)
+        
+        print(f"\n✅ Received response ({len(raw_result)} characters)")
+        
+        # Save raw output
+        save_to_file(raw_result, week_num)
         
         print(f"\n✅ Received response ({len(raw_result)} characters)")
         
