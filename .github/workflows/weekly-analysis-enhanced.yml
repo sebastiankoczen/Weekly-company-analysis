@@ -1,7 +1,5 @@
-"""
 Weekly AI Company Analysis Report - Enhanced Version
 Runs every Monday to analyze 10 companies and send formatted results via email
-"""
 
 import requests
 import os
