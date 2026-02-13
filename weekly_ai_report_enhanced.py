@@ -22,7 +22,7 @@ EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", "")
 EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 API_URL = "https://api.perplexity.ai/chat/completions"
-PERPLEXITY_MODEL = "sonar"
+PERPLEXITY_MODEL = "sonar-pro"
 COMPANIES_PER_WEEK = 10
 
 # ============================================================================
