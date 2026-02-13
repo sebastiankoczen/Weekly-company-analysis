@@ -8,6 +8,9 @@ Constraints:
 - Focus on evidence from the last 18 months, specifically looking for FY2025 status and FY2026 outlook.
 - Exclude companies where the issue is clearly resolved.
 - Provide specific, concrete evidence for each score assigned.
+- CRITICAL: You MUST process EVERY SINGLE company in the provided list. Do not skip any.
+- CRITICAL: Do NOT do a general industry search. You must perform distinct, targeted web searches for EACH company individually (e.g., "[Company Name] Q4 earnings", "[Company Name] supply chain disruption").
+- Focus on evidence from the last 18 months, specifically looking for FY2025 status and FY2026 outlook.
 
 Output Format: 
 
