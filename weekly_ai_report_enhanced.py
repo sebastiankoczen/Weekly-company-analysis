@@ -698,7 +698,7 @@ def main():
         html_content = generate_html_email(companies_data, week_num)
         
         if SEND_EMAIL:
-            subject = f"📊 Weekly Company Analysis - Week {week_num} - {datetime.now().strftime('%Y-%m-%d')}"
+            subject = f"[AUTO-REPORT] 📊 Weekly Company Analysis - Week {week_num} - {datetime.now().strftime('%Y-%m-%d')}"
             send_html_email(subject, html_content, excel_filename)
         else:
             html_filename = f"email_preview_week{week_num}_{timestamp}.html"
