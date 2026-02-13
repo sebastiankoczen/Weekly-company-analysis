@@ -23,7 +23,7 @@ EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 API_URL = "https://api.perplexity.ai/chat/completions"
 PERPLEXITY_MODEL = "sonar-pro"  # MUST BE PRO FOR DEEP RESEARCH
-COMPANIES_PER_WEEK = 5  # Processing 5 companies for highest quality
+COMPANIES_PER_WEEK = 3  # Processing 5 companies for highest quality
 
 # ============================================================================
 # DATA STRUCTURES
