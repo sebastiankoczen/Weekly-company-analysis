@@ -1,0 +1,67 @@
+Situation 1: Resource Constraints 
+A condition where the organization suffers from acute execution gaps driven by cultural toxicity, internal politics, low employee sentiment, or labor unrest. The constraint is that the environment prevents people from performing or staying.
+
+Scoring Criteria (1–5):
+
+    1 (Healthy): High employee engagement, strong retention, awards for "Best Place to Work," no visible unrest.
+
+    2 (Minor Friction): Generally stable, but isolated complaints about specific departments or minor post-merger cultural alignment issues; turnover is within industry norms.
+
+    3 (Moderate Strain): Noticeable dip in sentiment (e.g., Glassdoor 3.0–3.4), localized labor disputes or threats of strikes, reported difficulty in filling niche roles due to reputation.
+
+    4 (Significant Toxicity): Widespread dissatisfaction (Glassdoor <3.0), active but contained labor action (short strikes), senior leadership exodus, or public reports of a "toxic culture."
+
+    5 (Critical Crisis): Paralyzing strikes, mass resignations/brain drain, severe whistleblower scandals, legal action regarding labor practices, or complete breakdown of trust preventing daily execution.
+
+Keywords to pay attention to: "Layoffs," "Hiring freeze," "Restructuring," "Staff reduction program,"
+
+Situation 2: Supply Chain Disruption
+A situation where the flow of goods, materials, or logistics is interrupted, delayed, or degraded due to external or operational supply chain failures, regardless of internal staffing levels or profitability.
+
+Scoring Criteria (1–5):
+
+    1 (Optimized): Fully functional supply chain; high resilience; no delays reported; successfully navigating global issues without impact.
+
+    2 (Minor Delays): Occasional, manageable delays; increased lead times for non-critical parts; cost to serve is slightly higher but customer fulfillment is 95%+.
+
+    3 (Strained): Persistent delays in specific categories; frequent use of expedited freight (air vs. ocean); visible impact on inventory levels (too high or too low), but production continues.
+
+    4 (Severe Impact): Production throttling due to part shortages; significant backlog accumulation; public warnings about inability to meet demand due to logistics/supplier failure.
+
+    5 (Critical Breakdown): Factory shutdowns; Force Majeure declarations; complete inability to ship key products; reputational damage due to chronic fulfillment failure.
+
+Keywords to pay attention to: "Stockout," "Recall," "Supplier bankruptcy," "Logistics delay," "Port congestion," "Force majeure"
+
+Situation 3: Margin Pressure
+A financial condition where the organization’s profitability or EBITDA is declining or structurally insufficient due to cost inflation, inefficiencies, pricing pressure, or suboptimal operating models.
+
+Scoring Criteria (1–5):
+
+    1 (Robust): Margins are expanding; record profitability; strong pricing power that exceeds cost inflation.
+
+    2 (Stable/Flat): Margins are meeting expectations; cost increases are fully offset by pricing or efficiency; no urgent cost concerns.
+
+    3 (Squeezed): Margins are compressing (down 1-5%); costs rising faster than prices; "efficiency programs" initiated but not yet urgent/drastic.
+
+    4 (Deteriorating): Significant margin erosion (down >5%); missed earnings due to costs; aggressive cost-cutting announced (freezes, travel bans, minor layoffs).
+
+    5 (Distressed): EBITDA turns negative or critically low; profit warnings issued; restructuring advisors hired; large-scale layoffs primarily for survival/cost reasons.
+
+Keywords to pay attention to: "EBITDA decline," "Missed earnings," "Inflationary pressure," "Price increase," "Cost of goods sold (COGS)"
+
+Situation 4: Significant Growth: 
+A scenario in which the organization experiences or plans material increases in scale, complexity, or geographic footprint (organic or M&A), creating demands that exceed existing structures.
+
+Scoring Criteria (1–5):
+
+    1 (Stagnant/Contracting): Revenue shrinking; divestitures; focus on downsizing or pure maintenance.
+
+    2 (Incremental Growth): Low single-digit growth; business as usual; existing systems easily handle the load.
+
+    3 (Healthy Scaling): Solid growth (e.g., 5-10%); opening 1-2 new sites; implementing new systems to cope, but generally under control.
+
+    4 (Aggressive Expansion): Double-digit growth; entry into complex new regions; major product launches straining R&D/Ops; signs of "growing pains" (e.g., service dips due to volume).
+
+    5 (Hyper-Growth/Transformational): Massive M&A (merger of equals or large acquisition); exponential organic growth (>20%); total organizational restructuring required to manage new scale/complexity.
+
+Keywords to pay attention to: "New facility opening," "M&A," "Acquisition," "IPO," "Rapid hiring," "Series B/C funding"
