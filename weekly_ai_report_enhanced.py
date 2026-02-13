@@ -256,11 +256,15 @@ def create_excel_report(companies, week_num, output_path):
                 # Make first source clickable
                 if col_idx == 7:  # Sources column
                     sources_text = cell.value
-                    if sources_text and '|' in sources_text:
-                        urls = [s.strip() for s in sources_text.split('|')]
-                        if urls and urls[0].startswith('http'):
-                            cell.hyperlink = urls[0]
-                            cell.font = Font(name='Arial', size=10, color="0563C1", underline="single")
+                    if sources_text:
+                        # Split by pipe and remove brackets if any remain
+                        urls = [s.strip().strip('[]') for s in sources_text.split('|')]
+                        # Find the first valid URL to make the cell clickable
+                        for url in urls:
+                            if url.startswith('http'):
+                                cell.hyperlink = url
+                                cell.font = Font(name='Arial', size=10, color="0563C1", underline="single")
+                                break # Only make the first valid link the hyperlink for the cell
         
         # Set column widths
         ws.column_dimensions['A'].width = 20
@@ -518,12 +522,23 @@ def get_perplexity_response(prompt_text):
         print(f"Sending request to Perplexity API (model: {PERPLEXITY_MODEL})...")
         response = requests.post(API_URL, json=body, headers=headers, timeout=180)
         
-        if response.status_code != 200:
+       if response.status_code != 200:
             print(f"API Error {response.status_code}: {response.text}")
             raise Exception(f"Perplexity API Error: {response.text}")
-        
+
         result = response.json()
-        return result["choices"][0]["message"]["content"]
+        content = result["choices"][0]["message"]["content"]
+
+        # Grab the real deep links from Perplexity's hidden list
+        citations = result.get("citations", [])
+
+        # Swap the brackets (e.g., [1]) with the real URLs in the text
+        for i, url in enumerate(citations):
+            # The API uses 1-based indexing for the citations in the text
+            citation_marker = f"[{i+1}]" 
+            content = content.replace(citation_marker, url)
+
+        return content
     
     except Exception as e:
         raise Exception(f"API request failed: {str(e)}")
