@@ -520,24 +520,24 @@ def get_perplexity_response(prompt_text):
     
     try:
         print(f"Sending request to Perplexity API (model: {PERPLEXITY_MODEL})...")
-        response = requests.post(API_URL, json=body, headers=headers, timeout=180)
+        # Increased timeout to 600 to easily handle 10 companies
+        response = requests.post(API_URL, json=body, headers=headers, timeout=600)
         
-       if response.status_code != 200:
+        if response.status_code != 200:
             print(f"API Error {response.status_code}: {response.text}")
             raise Exception(f"Perplexity API Error: {response.text}")
-
+        
         result = response.json()
         content = result["choices"][0]["message"]["content"]
-
+        
         # Grab the real deep links from Perplexity's hidden list
         citations = result.get("citations", [])
-
+        
         # Swap the brackets (e.g., [1]) with the real URLs in the text
         for i, url in enumerate(citations):
-            # The API uses 1-based indexing for the citations in the text
             citation_marker = f"[{i+1}]" 
             content = content.replace(citation_marker, url)
-
+            
         return content
     
     except Exception as e:
