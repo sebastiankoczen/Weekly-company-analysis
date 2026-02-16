@@ -10,76 +10,81 @@ Before analyzing this company, you MUST perform these SPECIFIC web searches:
 
 DO NOT rely on company investor relations pages alone. You MUST find independent news articles.
 
-Objective: Analyze this company across 4 situations using REAL, RECENT news articles (not generic company pages).
+Objective: Analyze this company across the 4 situations defined below using REAL, RECENT news articles (not generic company pages).
+
+CRITICAL: You will find detailed definitions of the 4 situations and their scoring criteria (1-5) in the "Definitions of Situations and Scoring" section that follows this prompt. Study these definitions carefully and apply them precisely.
 
 Constraints:
 - Focus on last 18 months (FY2024, FY2025, FY2026 outlook)
 - Evidence must come from NEWS ARTICLES, not company homepages
+- Score each situation according to the specific criteria in the definitions
 - If you cannot find news, explicitly state "No recent news found" and score as 1
 
 Output Format:
 
-Analyze ALL 4 situations and provide results in this EXACT format:
+Analyze ALL 4 situations (using the definitions provided below) and provide results in this EXACT format:
 
 ---COMPANY START---
 Company: [Company Name]
 
 SITUATION 1: Resource Constraints
-Score: [1-5]
+Score: [1-5 based on definitions]
 Key Points:
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
-Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2] | [Direct URL to NEWS ARTICLE 3]
+Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2]
 
 SITUATION 2: Supply Chain Disruption
-Score: [1-5]
+Score: [1-5 based on definitions]
 Key Points:
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
-Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2] | [Direct URL to NEWS ARTICLE 3]
+Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2]
 
 SITUATION 3: Margin Pressure
-Score: [1-5]
+Score: [1-5 based on definitions]
 Key Points:
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
-Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2] | [Direct URL to NEWS ARTICLE 3]
+Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2]
 
 SITUATION 4: Significant Growth
-Score: [1-5]
+Score: [1-5 based on definitions]
 Key Points:
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
 - [Specific evidence from news article with date]
-Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2] | [Direct URL to NEWS ARTICLE 3]
+Sources: [Direct URL to NEWS ARTICLE 1] | [Direct URL to NEWS ARTICLE 2]
 ---COMPANY END---
 
 CRITICAL SOURCE REQUIREMENTS:
-1. URLs MUST be direct links to NEWS ARTICLES (Reuters, Bloomberg, FT, industry publications)
+1. URLs MUST be direct links to NEWS ARTICLES (Reuters, Bloomberg, FT, MedTech Dive, Fierce Pharma, industry publications)
 2. DO NOT use generic URLs like "company.com/investors" or "company.com/press-releases"
 3. Each source must be a SPECIFIC article with a headline and date
 4. Format: https://reuters.com/business/healthcare/specific-article-title-2024-11-15
-5. If no news articles exist, use Glassdoor for employee sentiment ONLY for Situation 1
-6. If absolutely no sources available, explicitly write: "No news articles found - company homepage: [URL]"
+5. For Situation 1 only: You may use Glassdoor for employee sentiment if no news articles exist
+6. If absolutely no news sources available, write: "No news articles found - company homepage: [URL]"
 
 FORMATTING RULES:
 1. Use EXACTLY these delimiters: "---COMPANY START---" and "---COMPANY END---"
 2. Always provide exactly 3 key points per situation
 3. NO citation numbers in bullet points - keep text clean
-4. Include dates in key points (e.g., "Q4 2024", "January 2025")
+4. Include specific dates in key points (e.g., "Q4 2024", "January 2025", "reported in November 2024")
 5. Be specific about numbers and facts (not vague statements)
+6. Apply the scoring criteria from the definitions precisely
 
 EXAMPLE OF GOOD SOURCES:
 https://www.reuters.com/business/healthcare/johnson-johnson-cuts-900-jobs-amid-restructuring-2024-08-15/
 https://www.bloomberg.com/news/articles/2024-11-20/bd-reports-supply-chain-delays-q3-earnings
-https://www.ft.com/content/abc123-fresenius-margin-pressure-pharma
+https://www.fiercepharma.com/manufacturing/fresenius-margin-pressure-2024
+https://www.medtechdive.com/news/sonova-acquisition-sennheiser/2024/
 
-EXAMPLE OF BAD SOURCES:
+EXAMPLE OF BAD SOURCES (DO NOT USE):
 https://www.jnj.com/investor-relations
 https://investors.bd.com/
 https://company.com/press-releases/
 
-If you provide generic homepage URLs, your analysis is REJECTED.
+REMEMBER: The definitions of each situation and their scoring criteria follow below. Read them carefully and apply them to your analysis.
