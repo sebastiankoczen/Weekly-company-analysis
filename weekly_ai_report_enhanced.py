@@ -630,10 +630,12 @@ def main():
         
         # Send email or save preview
         if SEND_EMAIL:
-        send_html_email(f"[AUTO-REPORT] 📊 Weekly Company Analysis - Week {week_num}", html_content, excel_filename)
+            subject = f"[AUTO-REPORT] 📊 Weekly Company Analysis - Week {week_num}"
+            send_html_email(subject, html_content, excel_filename)
         else:
-        with open(f"email_preview_week{week_num}_{datetime.now().strftime('%H-%M-%S')}.html", "w", encoding="utf-8") as f: 
-        f.write(html_content)
+            html_filename = f"email_preview_week{week_num}_{datetime.now().strftime('%H-%M-%S')}.html"
+            with open(html_filename, "w", encoding="utf-8") as f:
+                f.write(html_content)
             print(f"✅ Email preview saved: {html_filename}")
         
         print("\n" + "=" * 70)
