@@ -24,9 +24,9 @@ EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 API_URL = "https://api.perplexity.ai/chat/completions"
 PERPLEXITY_MODEL = "sonar-pro"  # Best quality for web search
-COMPANIES_PER_WEEK = 10  # Process 10 companies per week
-TOKENS_PER_COMPANY = 8000  # Generous allowance for thorough research
-REQUEST_DELAY = 2  # Seconds between API calls to avoid rate limits
+COMPANIES_PER_WEEK = 2  # Process 2 companies per week
+TOKENS_PER_COMPANY = 10000  # Generous allowance for thorough research
+REQUEST_DELAY = 5  # Seconds between API calls to avoid rate limits
 
 # ============================================================================
 # DATA STRUCTURES
@@ -73,7 +73,7 @@ def parse_perplexity_response(response_text):
         
         # Parse each of 4 situations
         for sit_num in range(1, 5):
-            pattern = rf'SITUATION {sit_num}:.*?\nScore:\s*(\d+)\s*\nKey Points:\s*\n(.*?)\nSources:\s*(.+?)(?=\n\nSITUATION|\n---COMPANY END---|$)'
+            pattern = rf'SITUATION {sit_num}:.*?\nScore:\s*(\d+)\s*\nKey Signals.*?:\s*\n(.*?)\nEvidence Links:\s*\n(.*?)(?=\n\nSITUATION|\n---COMPANY END---|$)'
             match = re.search(pattern, block, re.DOTALL | re.IGNORECASE)
             
             if match:
@@ -92,10 +92,13 @@ def parse_perplexity_response(response_text):
                 
                 # Extract URLs (looking for http/https links)
                 sources = []
-                for s in re.split(r'[|\n]', sources_text):
-                    s = s.strip()
-                    if s.startswith('http'):
-                        sources.append(s)
+                for line in sources_text.split('\n'):
+                    line = line.strip()
+                    if line.startswith('-') and 'http' in line:
+                        # Extract URL from format: "- DD.MM.YYYY - https://..."
+                        url_match = re.search(r'https?://[^\s]+', line)
+                        if url_match:
+                            sources.append(url_match.group(0))
                 
                 company.situations[sit_num]["score"] = score
                 company.situations[sit_num]["points"] = points[:3]
@@ -404,35 +407,72 @@ def generate_html_email(companies, week_num):
 # ============================================================================
 
 def get_perplexity_response(prompt_text):
-    """Send prompt to Perplexity API and get response"""
+    """Send prompt to Perplexity API with Pro-level parameters"""
     if not PERPLEXITY_API_KEY:
-        raise ValueError("PERPLEXITY_API_KEY not found in environment variables")
+        raise ValueError("PERPLEXITY_API_KEY not found")
     
     headers = {
         "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
         "Content-Type": "application/json"
     }
     
+    # Pro-level API parameters
     body = {
-        "model": PERPLEXITY_MODEL,
-        "messages": [{"role": "user", "content": prompt_text}],
-        "max_tokens": TOKENS_PER_COMPANY,  # 6000 tokens per company
+        "model": "sonar-pro",  # Use Pro model
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a senior strategy consultant conducting thorough web research. Always search for recent, credible sources and provide specific evidence with publication dates and clickable URLs."
+            },
+            {
+                "role": "user",
+                "content": prompt_text
+            }
+        ],
+        "max_tokens": 10000,  # Increased for detailed analysis
         "stream": False,
-        "temperature": 0.2,
-        "top_p": 0.9
+        "temperature": 0.3,  # Balanced for thorough search
+        "top_p": 0.9,
+        
+        # Enable Pro-level features
+        "return_citations": True,  # Returns actual URLs
+        "search_recency_filter": "month",  # Recent news only
+        "search_domain_filter": [  # News sites only
+            "reuters.com",
+            "bloomberg.com",
+            "ft.com",
+            "wsj.com",
+            "cnbc.com",
+            "fiercepharma.com",
+            "medtechdive.com",
+            "businessinsider.com",
+            "forbes.com",
+            "investing.com",
+            "seekingalpha.com"
+        ]
     }
     
     try:
-        response = requests.post(API_URL, json=body, headers=headers, timeout=180)
+        print(f"🔍 Calling Perplexity Pro API...")
+        response = requests.post(API_URL, json=body, headers=headers, timeout=240)
         
         if response.status_code != 200:
-            raise Exception(f"Perplexity API Error {response.status_code}: {response.text}")
+            print(f"API Error {response.status_code}: {response.text}")
+            raise Exception(f"Perplexity API Error: {response.text}")
         
         result = response.json()
-        return result["choices"][0]["message"]["content"]
+        
+        # Check for citations
+        if "citations" in result:
+            print(f"   ✅ Received {len(result.get('citations', []))} citations")
+        
+        content = result["choices"][0]["message"]["content"]
+        print(f"   ✅ Received {len(content)} characters")
+        
+        return content
     
     except requests.exceptions.Timeout:
-        raise Exception("Request timed out after 180 seconds")
+        raise Exception("Request timed out after 240 seconds")
     except Exception as e:
         raise Exception(f"API request failed: {str(e)}")
 
