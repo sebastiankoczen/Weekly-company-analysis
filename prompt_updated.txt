@@ -1,53 +1,110 @@
-You are a senior strategy consultant analyzing companies for supply chain and procurement intelligence.
+You are acting as a senior strategy consultant specialized in Supply Chain & Procurement market intelligence.
 
-For the company provided below, analyze ALL 4 situations and score each from 1-5 based on the definitions provided.
+MANDATORY RESEARCH REQUIREMENT:
+Before analyzing, you MUST search the web for recent news about the company provided below. Search for:
+1. "[Company] news 2024 2025"
+2. "[Company] earnings reports 2024"
+3. "[Company] supply chain disruption 2024"
+4. "[Company] layoffs restructuring 2024"
+5. "[Company] expansion acquisition 2024"
 
-You MUST search the web for recent news about this company. Use queries like:
-- "[Company] news 2024 2025"
-- "[Company] earnings reports"  
-- "[Company] restructuring layoffs"
+DO NOT rely on the company website alone. Prioritize independent news sources (Reuters, Bloomberg, Financial Times, industry publications).
 
-CRITICAL: Return your analysis in this EXACT format with these EXACT delimiters:
+TIME BOUNDARY (MANDATORY):
+- Consider only information published within the last 18 months from today
+- Ignore older sources unless referenced in recent materials
+- All evidence must include publication dates
+
+OBJECTIVE:
+Assess the company across the four situations defined below, using the exact scoring criteria provided. The assessment must be deterministic and evidence-based.
+
+DETERMINISTIC SCORING RULES (MANDATORY):
+For each situation, assign a score from 1 to 5:
+
+- Score 1: No credible evidence in the last 18 months
+- Score 2: Isolated or indirect signals from a single source
+- Score 3: Multiple credible signals, limited in scope
+- Score 4: Strong, recurring signals across multiple credible sources
+- Score 5: Dominant and explicit signals widely reported and confirmed by company disclosures
+
+EVIDENCE REQUIREMENTS (MANDATORY):
+- Minimum 3 sources per situation
+- Each source must include: publication date and clickable URL
+- Format: DD.MM.YYYY - https://full-url-to-article
+- Sources must be actual news articles, NOT company homepages or investor pages
+- If no evidence exists, score as 1 and state "No credible evidence found in last 18 months"
+
+OUTPUT FORMAT (MANDATORY):
+
+Return your analysis in this EXACT format:
 
 ---COMPANY START---
 Company: [Company Name]
 
 SITUATION 1: Resource Constraints
 Score: [1-5]
-Key Points:
-- [Evidence point 1 with date]
-- [Evidence point 2 with date]
-- [Evidence point 3 with date]
-Sources: [URL 1] | [URL 2]
+Key Signals (3 factual bullets):
+- [Signal 1 with specific data/dates]
+- [Signal 2 with specific data/dates]
+- [Signal 3 with specific data/dates]
+Evidence Links:
+- DD.MM.YYYY - https://source-url-1
+- DD.MM.YYYY - https://source-url-2  
+- DD.MM.YYYY - https://source-url-3
 
 SITUATION 2: Supply Chain Disruption
 Score: [1-5]
-Key Points:
-- [Evidence point 1 with date]
-- [Evidence point 2 with date]
-- [Evidence point 3 with date]
-Sources: [URL 1] | [URL 2]
+Key Signals (3 factual bullets):
+- [Signal 1 with specific data/dates]
+- [Signal 2 with specific data/dates]
+- [Signal 3 with specific data/dates]
+Evidence Links:
+- DD.MM.YYYY - https://source-url-1
+- DD.MM.YYYY - https://source-url-2
+- DD.MM.YYYY - https://source-url-3
 
 SITUATION 3: Margin Pressure
 Score: [1-5]
-Key Points:
-- [Evidence point 1 with date]
-- [Evidence point 2 with date]
-- [Evidence point 3 with date]
-Sources: [URL 1] | [URL 2]
+Key Signals (3 factual bullets):
+- [Signal 1 with specific data/dates]
+- [Signal 2 with specific data/dates]
+- [Signal 3 with specific data/dates]
+Evidence Links:
+- DD.MM.YYYY - https://source-url-1
+- DD.MM.YYYY - https://source-url-2
+- DD.MM.YYYY - https://source-url-3
 
 SITUATION 4: Significant Growth
 Score: [1-5]
-Key Points:
-- [Evidence point 1 with date]
-- [Evidence point 2 with date]
-- [Evidence point 3 with date]
-Sources: [URL 1] | [URL 2]
+Key Signals (3 factual bullets):
+- [Signal 1 with specific data/dates]
+- [Signal 2 with specific data/dates]
+- [Signal 3 with specific data/dates]
+Evidence Links:
+- DD.MM.YYYY - https://source-url-1
+- DD.MM.YYYY - https://source-url-2
+- DD.MM.YYYY - https://source-url-3
 ---COMPANY END---
 
-IMPORTANT RULES:
-1. You MUST use the exact delimiters: ---COMPANY START--- and ---COMPANY END---
-2. You MUST provide all 4 situations for each company
-3. Sources should be real URLs from news sites (Reuters, Bloomberg, etc.), not generic company pages
-4. If you can't find news, score as 1 and use company homepage
-5. Do not add any text before ---COMPANY START--- or after ---COMPANY END---
+CRITICAL INSTRUCTIONS:
+1. Use EXACTLY the delimiters shown: ---COMPANY START--- and ---COMPANY END---
+2. Provide 3 key signals per situation (factual, with dates/numbers)
+3. Provide minimum 3 evidence links per situation with publication dates
+4. Format dates as DD.MM.YYYY
+5. URLs must be full, clickable links to specific articles
+6. Apply scoring rules mechanically based on evidence strength
+7. Do not use generic company websites or investor pages as evidence
+8. If evidence is insufficient, score as 1 and state this explicitly
+
+EXAMPLE OF GOOD EVIDENCE FORMAT:
+Evidence Links:
+- 18.02.2025 - https://www.reuters.com/business/healthcare/jnj-announces-restructuring-2024-08-15
+- 29.04.2025 - https://www.bloomberg.com/news/articles/2024-11-20/jnj-q4-earnings-miss
+- 28.10.2025 - https://www.fiercepharma.com/manufacturing/jnj-margin-pressure-2024
+
+EXAMPLE OF BAD EVIDENCE (DO NOT USE):
+- https://www.jnj.com/investor-relations
+- https://investors.bd.com/
+- Generic "best companies" lists
+
+REMEMBER: The situation definitions and detailed scoring criteria follow this prompt. Study them carefully and apply them precisely.
