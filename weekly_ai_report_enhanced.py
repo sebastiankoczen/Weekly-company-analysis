@@ -24,7 +24,7 @@ EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 API_URL = "https://api.perplexity.ai/chat/completions"
 PERPLEXITY_MODEL = "llama-3.1-sonar-large-128k-online"  # Best quality for web search
-COMPANIES_PER_WEEK = 1  # Process 10 companies per week
+COMPANIES_PER_WEEK = 10  # Process 10 companies per week
 TOKENS_PER_COMPANY = 8000  # Generous allowance for thorough research
 REQUEST_DELAY = 2  # Seconds between API calls to avoid rate limits
 
