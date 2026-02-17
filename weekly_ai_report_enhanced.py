@@ -28,7 +28,7 @@ EMAIL_FROM      = os.environ.get("EMAIL_FROM", "")
 EMAIL_PASSWORD  = os.environ.get("EMAIL_PASSWORD", "")
 EMAIL_TO        = os.environ.get("EMAIL_TO", "")
 
-GEMINI_MODEL       = "gemini-1.5-pro"   # or "gemini-2.0-flash" for cheaper/faster
+GEMINI_MODEL       = "gemini-2.0-flash"   # or "gemini-2.0-flash" for cheaper/faster
 COMPANIES_PER_WEEK = 10                   # Increase to 10 once results are good
 REQUEST_DELAY      = 10                   # Seconds between companies
 
