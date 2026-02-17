@@ -27,13 +27,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests pandas openpyxl
+          pip install google-generativeai pandas openpyxl
       
      # Step 4: Run the analysis script
       - name: Run weekly analysis
         env:
-          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
-          SEND_EMAIL: "true"
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SEND_EMAIL: ${{ secrets.SEND_EMAIL }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
