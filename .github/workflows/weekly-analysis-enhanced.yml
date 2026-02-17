@@ -1,9 +1,43 @@
+# EXACT CHANGES needed in .github/workflows/weekly-analysis-enhanced.yml
+# ============================================================
+
+# FIND this line:
+#     pip install requests pandas openpyxl
+#
+# REPLACE WITH:
+#     pip install google-generativeai pandas openpyxl
+
+# ============================================================
+
+# FIND this line in the env: block:
+#     PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+#
+# REPLACE WITH:
+#     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+# ============================================================
+# FULL env: block should look like this:
+# ============================================================
+
+# env:
+#   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+#   SEND_EMAIL: ${{ secrets.SEND_EMAIL }}
+#   EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+#   EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+#   EMAIL_TO: ${{ secrets.EMAIL_TO }}
+#   SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+#   SMTP_PORT: ${{ secrets.SMTP_PORT }}
+
+# ============================================================
+# COMPLETE WORKFLOW FILE (copy the whole thing if easier)
+# ============================================================
+
 name: Weekly Company Analysis
 
 on:
   schedule:
-    - cron: '0 9 * * 1'   # Every Monday 9:00 AM UTC
-  workflow_dispatch:        # Manual trigger
+    - cron: '0 9 * * 1'   # Every Monday at 9:00 AM UTC
+  workflow_dispatch:        # Also allows manual trigger
 
 jobs:
   analyze:
@@ -21,17 +55,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install google-genai pandas openpyxl requests
+          pip install google-generativeai pandas openpyxl
 
       - name: Run analysis
         env:
-          GEMINI_API_KEY:           ${{ secrets.GEMINI_API_KEY }}
-          UPLOAD_TO_ONEDRIVE:       ${{ secrets.UPLOAD_TO_ONEDRIVE }}
-          ONEDRIVE_CLIENT_ID:       ${{ secrets.ONEDRIVE_CLIENT_ID }}
-          ONEDRIVE_CLIENT_SECRET:   ${{ secrets.ONEDRIVE_CLIENT_SECRET }}
-          ONEDRIVE_TENANT_ID:       ${{ secrets.ONEDRIVE_TENANT_ID }}
-          ONEDRIVE_FOLDER:          WeeklyReports
-          SEND_EMAIL:               ${{ secrets.SEND_EMAIL }}
+          GEMINI_API_KEY:   ${{ secrets.GEMINI_API_KEY }}
+          SEND_EMAIL:       ${{ secrets.SEND_EMAIL }}
           EMAIL_FROM:       ${{ secrets.EMAIL_FROM }}
           EMAIL_PASSWORD:   ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO:         ${{ secrets.EMAIL_TO }}
