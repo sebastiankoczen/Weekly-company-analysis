@@ -1,55 +1,46 @@
-name: Weekly Company Analysis - Enhanced
+name: Weekly Company Analysis
 
 on:
-  # Run every Monday at 9:00 AM UTC
   schedule:
-    - cron: '0 9 * * 1'  # Format: minute hour day month weekday (1 = Monday)
-  
-  # Also allow manual trigger from GitHub UI
-  workflow_dispatch:
+    - cron: '0 9 * * 1'   # Every Monday at 9:00 AM UTC
+  workflow_dispatch:        # Also allows manual trigger
 
 jobs:
-  analyze-companies:
+  analyze:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # Step 1: Check out the repository code
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      # Step 2: Set up Python environment
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
-      # Step 3: Install required Python packages
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install google-generativeai pandas openpyxl
-      
-     # Step 4: Run the analysis script
-      - name: Run weekly analysis
+
+      - name: Run analysis
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          SEND_EMAIL: ${{ secrets.SEND_EMAIL }}
-          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          EMAIL_TO: ${{ secrets.EMAIL_TO }}
-          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-        run: |
-          python weekly_ai_report_enhanced.py
-      
-      # Step 5: Upload the reports as artifacts
-      - name: Upload reports
+          GEMINI_API_KEY:   ${{ secrets.GEMINI_API_KEY }}
+          SEND_EMAIL:       ${{ secrets.SEND_EMAIL }}
+          EMAIL_FROM:       ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD:   ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO:         ${{ secrets.EMAIL_TO }}
+          SMTP_SERVER:      ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT:        ${{ secrets.SMTP_PORT }}
+        run: python weekly_ai_report_enhanced.py
+
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
-        if: always()  # Upload even if the script fails
+        if: always()
         with:
           name: weekly-report-${{ github.run_number }}
           path: |
-            report_*.txt
-            analysis_*.xlsx
-            email_preview_*.html
-          retention-days: 90  # Keep reports for 90 days
+            report_week*.txt
+            analysis_week*.xlsx
+            email_preview_week*.html
+          retention-days: 30
