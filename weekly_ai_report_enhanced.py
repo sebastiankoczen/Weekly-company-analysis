@@ -23,7 +23,7 @@ EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", "")
 EMAIL_TO = os.environ.get("EMAIL_TO", "")
 
 API_URL = "https://api.perplexity.ai/chat/completions"
-PERPLEXITY_MODEL = "sonar-pro"  # Best quality for web search
+PERPLEXITY_MODEL = "llama-3.1-sonar-large-128k-online"  # Best quality for web search
 COMPANIES_PER_WEEK = 2  # Process 2 companies per week
 TOKENS_PER_COMPANY = 10000  # Generous allowance for thorough research
 REQUEST_DELAY = 5  # Seconds between API calls to avoid rate limits
@@ -418,40 +418,14 @@ def get_perplexity_response(prompt_text):
     
     # Pro-level API parameters
     body = {
-        "model": "sonar-pro",  # Use Pro model
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a senior strategy consultant conducting thorough web research. Always search for recent, credible sources and provide specific evidence with publication dates and clickable URLs."
-            },
-            {
-                "role": "user",
-                "content": prompt_text
-            }
-        ],
-        "max_tokens": 10000,  # Increased for detailed analysis
+        "model": "llama-3.1-sonar-large-128k-online",  # Back to this
+        "messages": [{"role": "user", "content": prompt_text}],
+        "max_tokens": 10000,
         "stream": False,
-        "temperature": 0.3,  # Balanced for thorough search
-        "top_p": 0.9,
-        
-        # Enable Pro-level features
-        "return_citations": True,  # Returns actual URLs
-        "search_recency_filter": "month",  # Recent news only
-        "search_domain_filter": [  # News sites only
-            "reuters.com",
-            "bloomberg.com",
-            "ft.com",
-            "wsj.com",
-            "cnbc.com",
-            "fiercepharma.com",
-            "medtechdive.com",
-            "businessinsider.com",
-            "forbes.com",
-            "investing.com",
-            "seekingalpha.com"
-        ]
+        "temperature": 0.3,
+        "top_p": 0.9
     }
-    
+        
     try:
         print(f"🔍 Calling Perplexity Pro API...")
         response = requests.post(API_URL, json=body, headers=headers, timeout=240)
