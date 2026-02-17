@@ -21,8 +21,8 @@ EMAIL_PASSWORD  = os.environ.get("EMAIL_PASSWORD", "")
 EMAIL_TO        = os.environ.get("EMAIL_TO", "")
 
 GEMINI_MODEL       = "gemini-2.0-flash"   # Fast, current, supports Google Search
-COMPANIES_PER_WEEK = 2                     # Increase to 10 once results look good
-REQUEST_DELAY      = 8                     # Seconds between companies
+COMPANIES_PER_WEEK = 10                     # Increase to 10 once results look good
+REQUEST_DELAY      = 10                     # Seconds between companies
 
 # ============================================================================
 # STARTUP CHECKS
