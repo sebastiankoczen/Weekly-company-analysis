@@ -20,9 +20,21 @@ EMAIL_FROM      = os.environ.get("EMAIL_FROM", "")
 EMAIL_PASSWORD  = os.environ.get("EMAIL_PASSWORD", "")
 EMAIL_TO        = os.environ.get("EMAIL_TO", "")
 
-GEMINI_MODEL       = "gemini-2.0-flash"   # Fast, current, supports Google Search
-COMPANIES_PER_WEEK = 2                     # Increase to 10 once results look good
-REQUEST_DELAY      = 8                     # Seconds between companies
+# Model options (all support Google Search grounding):
+#   "gemini-2.0-flash"       — fast, cheap, great quality  ← recommended
+#   "gemini-2.5-pro-preview-03-25" — best quality, slower, costs more
+#   "gemini-1.5-pro"         — stable alternative
+GEMINI_MODEL       = "gemini-2.0-flash"
+COMPANIES_PER_WEEK = 10                    # Full production run
+REQUEST_DELAY      = 10                    # Seconds between companies (avoid rate limits)
+
+# OneDrive upload (replaces Gmail SMTP — safer, no app passwords needed)
+# Set UPLOAD_TO_ONEDRIVE=true in GitHub Secrets to enable
+UPLOAD_TO_ONEDRIVE    = os.environ.get("UPLOAD_TO_ONEDRIVE", "false").lower() == "true"
+ONEDRIVE_CLIENT_ID    = os.environ.get("ONEDRIVE_CLIENT_ID", "")
+ONEDRIVE_CLIENT_SECRET= os.environ.get("ONEDRIVE_CLIENT_SECRET", "")
+ONEDRIVE_TENANT_ID    = os.environ.get("ONEDRIVE_TENANT_ID", "")
+ONEDRIVE_FOLDER       = os.environ.get("ONEDRIVE_FOLDER", "WeeklyReports")
 
 # ============================================================================
 # STARTUP CHECKS
@@ -36,6 +48,15 @@ def check_environment():
         errors.append("❌ GEMINI_API_KEY missing from GitHub Secrets")
     else:
         print(f"   ✅ GEMINI_API_KEY found ({GEMINI_API_KEY[:8]}...)")
+
+    if UPLOAD_TO_ONEDRIVE:
+        for var, val in [("ONEDRIVE_CLIENT_ID",     ONEDRIVE_CLIENT_ID),
+                         ("ONEDRIVE_CLIENT_SECRET", ONEDRIVE_CLIENT_SECRET),
+                         ("ONEDRIVE_TENANT_ID",     ONEDRIVE_TENANT_ID)]:
+            if not val:
+                errors.append(f"❌ {var} missing — required when UPLOAD_TO_ONEDRIVE=true")
+            else:
+                print(f"   ✅ {var} found")
 
     if SEND_EMAIL:
         for var, val in [("EMAIL_FROM", EMAIL_FROM),
@@ -350,6 +371,60 @@ def send_html_email(subject, html, excel_path=None):
 # HELPERS
 # ============================================================================
 
+def upload_to_onedrive(excel_path, week_num):
+    """
+    Upload Excel file to OneDrive using Microsoft Graph API.
+    Uses app-only authentication (Client Credentials) — no user login needed.
+    
+    Setup: See ONEDRIVE_SETUP_GUIDE.md for Azure App Registration steps.
+    """
+    import requests as req
+
+    print(f"   📤 Uploading to OneDrive folder: {ONEDRIVE_FOLDER}/")
+
+    # Step 1: Get access token from Microsoft
+    token_url = f"https://login.microsoftonline.com/{ONEDRIVE_TENANT_ID}/oauth2/v2.0/token"
+    token_resp = req.post(token_url, data={
+        "grant_type":    "client_credentials",
+        "client_id":     ONEDRIVE_CLIENT_ID,
+        "client_secret": ONEDRIVE_CLIENT_SECRET,
+        "scope":         "https://graph.microsoft.com/.default",
+    })
+    token_resp.raise_for_status()
+    access_token = token_resp.json()["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+
+    # Step 2: Find the target folder in OneDrive (uses first matching drive)
+    drives_resp = req.get("https://graph.microsoft.com/v1.0/me/drives", headers=headers)
+    if drives_resp.status_code == 401:
+        # App-only: use /sites/root/drive instead of /me/drives
+        drive_resp = req.get("https://graph.microsoft.com/v1.0/sites/root/drive", headers=headers)
+        drive_resp.raise_for_status()
+        drive_id = drive_resp.json()["id"]
+    else:
+        drives_resp.raise_for_status()
+        drive_id = drives_resp.json()["value"][0]["id"]
+
+    # Step 3: Upload file (overwrites if exists — so Power Automate sees a fresh file each week)
+    filename     = os.path.basename(excel_path)
+    upload_url   = f"https://graph.microsoft.com/v1.0/drives/{drive_id}/root:/{ONEDRIVE_FOLDER}/{filename}:/content"
+    with open(excel_path, "rb") as f:
+        up_resp = req.put(upload_url, headers={
+            **headers,
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        }, data=f)
+    up_resp.raise_for_status()
+
+    file_url = up_resp.json().get("webUrl", "unknown")
+    print(f"   ✅ Uploaded: {filename}")
+    print(f"   🔗 OneDrive URL: {file_url}")
+    return file_url
+
+
+# ============================================================================
+# HELPERS
+# ============================================================================
+
 def get_companies_for_week(companies, week_num, per_week):
     total_weeks = max(1, (len(companies) + per_week - 1) // per_week)
     week_num    = ((week_num - 1) % total_weeks) + 1
@@ -457,15 +532,27 @@ def main():
     print("📧 Generating HTML...")
     html = generate_html_email(companies_data, week_num)
 
+    # --- OneDrive upload (triggers Power Automate → distributes email to team) ---
+    if UPLOAD_TO_ONEDRIVE:
+        try:
+            upload_to_onedrive(xlsx, week_num)
+            print("   ℹ️  Power Automate will detect the new file and send emails to team")
+        except Exception as e:
+            print(f"   ❌ OneDrive upload failed: {e}")
+            print("   Falling back to direct email if configured...")
+
+    # --- Direct Gmail send (original method) ---
     if SEND_EMAIL:
         send_html_email(
             f"[AUTO-REPORT] 📊 Weekly Company Analysis - Week {week_num}",
             html, xlsx
         )
-    else:
+
+    # --- Neither enabled: save HTML preview for manual check ---
+    if not SEND_EMAIL and not UPLOAD_TO_ONEDRIVE:
         preview = f"email_preview_week{week_num}_{ts}.html"
         open(preview, "w", encoding="utf-8").write(html)
-        print(f"   💾 HTML preview: {preview}")
+        print(f"   💾 HTML preview saved: {preview}")
 
     print("\n" + "="*70)
     print("✅ DONE")
